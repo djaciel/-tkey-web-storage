@@ -138,8 +138,8 @@ const canAccessFileStorage = async () => navigator.permissions.query({
   name: "persistent-storage"
 });
 
-const win = getWindow();
 function storageAvailable(type) {
+  const win = getWindow();
   let storage;
   try {
     storage = win[type];
@@ -167,12 +167,14 @@ const storeShareOnLocalStorage = async (share, key) => {
   if (!storageAvailable("localStorage")) {
     throw WebStorageError.localStorageUnavailable();
   }
+  const win = getWindow();
   win.localStorage.setItem(key, fileStr);
 };
 const getShareFromLocalStorage = async key => {
   if (!storageAvailable("localStorage")) {
     throw WebStorageError.localStorageUnavailable();
   }
+  const win = getWindow();
   const foundFile = win.localStorage.getItem(key);
   if (!foundFile) throw WebStorageError.shareUnavailableInLocalStorage();
   return ShareStore.fromJSON(JSON.parse(foundFile));

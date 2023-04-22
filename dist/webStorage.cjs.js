@@ -216,8 +216,8 @@ const canAccessFileStorage = async () => navigator.permissions.query({
 
 
 
-const win = getWindow();
 function storageAvailable(type) {
+  const win = getWindow();
   let storage;
   try {
     storage = win[type];
@@ -245,12 +245,14 @@ const storeShareOnLocalStorage = async (share, key) => {
   if (!storageAvailable("localStorage")) {
     throw errors.localStorageUnavailable();
   }
+  const win = getWindow();
   win.localStorage.setItem(key, fileStr);
 };
 const getShareFromLocalStorage = async key => {
   if (!storageAvailable("localStorage")) {
     throw errors.localStorageUnavailable();
   }
+  const win = getWindow();
   const foundFile = win.localStorage.getItem(key);
   if (!foundFile) throw errors.shareUnavailableInLocalStorage();
   return common_types_namespaceObject.ShareStore.fromJSON(JSON.parse(foundFile));
